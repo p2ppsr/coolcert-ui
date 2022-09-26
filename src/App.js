@@ -14,6 +14,8 @@ import { makeStyles } from '@material-ui/core/styles'
 import { invoice, pay } from './utils'
 import GetCertIcon from '@material-ui/icons/GetApp'
 
+import sdk from '@babbage/sdk'
+
 const isStaging = true || Boolean(process.env.REACT_APP_IS_STAGING)
 
 const useStyles = makeStyles(style, {
@@ -38,6 +40,15 @@ export default () => {
     e.preventDefault()
     setLoading(true)
     try {
+      var r = await sdk.getCertificates({
+        // Specify the types of certificates to request...
+        // Here, we are requesting a "Cool Person Certificate"
+        types: ['AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo='],
+        // Provide a list of certifiers you trust. Here, we are trusting
+        // CoolCert, the CA that issues Cool Person Certificates.
+        certifiers: ['0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8']
+      })
+      console.log('r=', r)
     } catch (e) {
       console.error(e)
       if (e.response && e.response.data && e.response.data.description) {

@@ -1,6 +1,6 @@
-# Byteshop UI
+# CoolCert UI
 
-a user interface for the [Byte Shop API Server](https://github.com/p2ppsr/byte-shop).
+A example user interface for the [CoolCert Server](https://github.com/p2ppsr/coolcert).
 
 ## Setting Up
 
