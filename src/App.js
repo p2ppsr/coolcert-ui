@@ -12,58 +12,32 @@ import 'react-toastify/dist/ReactToastify.css'
 import style from './style'
 import { makeStyles } from '@material-ui/core/styles'
 import { invoice, pay } from './utils'
-import Buy from '@material-ui/icons/GetApp'
+import GetCertIcon from '@material-ui/icons/GetApp'
 
-const isStaging = Boolean(process.env.REACT_APP_IS_STAGING)
+const isStaging = true || Boolean(process.env.REACT_APP_IS_STAGING)
 
 const useStyles = makeStyles(style, {
-  name: 'ByteShop'
+  name: 'CoolCert'
 })
 export default () => {
   const classes = useStyles()
-  const [tabIndex, setTabIndex] = useState(0)
   const [serverURL, setServerURL] = useState(
-    window.location.host.startsWith('localhost')
-      ? 'http://localhost:3002'
-      : isStaging
-        ? 'https://staging-byte-shop.babbage.systems'
+    //window.location.host.startsWith('localhost')
+    //  ? 'http://localhost:3002'
+    //  :
+       isStaging
+        ? 'https://staging-coolcert.babbage.systems'
         : 'https://byte-shop.babbage.systems'
   )
-  const [numberOfBytes, setNumberOfBytes] = useState(14)
   const [results, setResults] = useState('')
   const [loading, setLoading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
 
-  const handleBuy = async e => {
+  const handleGetCert = async e => {
+    console.log("handling get cert")
     e.preventDefault()
     setLoading(true)
     try {
-      if (!numberOfBytes) {
-        const e = new Error('Specify the number of bytes > 10!')
-        e.code = 'ERR_MISSING_NUMBER_OF_BYTES'
-        throw e
-      }
-      const invoiceResult = await invoice({
-        numberOfBytes,
-        config: {
-          byteshopURL: serverURL
-        }
-      })
-      console.log('App():invoiceResult:', invoiceResult)
-      const payResult = await pay({
-        config: {
-          byteshopURL: serverURL
-        },
-        description: 'Buy with Byteshop UI',
-        orderID: invoiceResult.orderID,
-        recipientPublicKey: invoiceResult.identityKey,
-        amount: invoiceResult.amount
-      })
-      console.log('App():payResult:', payResult)
-      setResults({
-        bytes: payResult.bytes,
-        note: payResult.note
-      })
     } catch (e) {
       console.error(e)
       if (e.response && e.response.data && e.response.data.description) {
@@ -81,26 +55,15 @@ export default () => {
     <div className={classes.content_wrap}>
       <ToastContainer />
       <center>
-        <Typography variant='h4'>Byteshop UI</Typography>
+        <Typography variant='h4'>CoolCert UI</Typography>
         <br />
         <br />
-        <Tabs
-          onChange={(e, v) => setTabIndex(v)}
-          value={tabIndex}
-          indicatorColor='primary'
-          textColor='primary'
-          variant='fullWidth'
-        >
-           <Tab label='Buy bytes' />
-        </Tabs>
       </center>
-      {tabIndex === 0 && (
-        <form onSubmit={handleBuy}>
-          <br />
-          <br />
+      {true && (
+        <form onSubmit={handleGetCert}>
           <Typography variant='h5'>Server URL</Typography>
           <Typography paragraph>
-            Enter the URL of the Byteshop server to interact with
+            Enter the URL of the CoolCert server to interact with
           </Typography>
           <TextField
             fullWidth
@@ -112,26 +75,17 @@ export default () => {
           <br />
           <br />
           <br />
-          <Typography paragraph>
-            Enter number of bytes to be purchased > 10
-          </Typography>
-          <TextField
-            fullWidth
-            variant='outlined'
-            label='Number of bytes'
-            value={numberOfBytes}
-            onChange={e => setNumberOfBytes(e.target.value)}
-          />
           <center className={classes.broadcast_wrap}>
             <Button
+              onClick={handleGetCert}
               variant='contained'
               color='primary'
               size='large'
               type='submit'
               disabled={loading}
-              startIcon={<Buy />}
+              startIcon={<GetCertIcon />}
             >
-              Buy
+              Get Cool Certificate
             </Button>
             <br />
             <br />
@@ -144,8 +98,6 @@ export default () => {
             {results && (
               <div>
                 <Typography variant='h4'>Success!</Typography>
-                <Typography><b>Your bytes:</b>{' '}{results.bytes}</Typography>
-                <Typography><b>Note:</b>{' '}{results.note}</Typography>
               </div>
             )}
           </center>
@@ -153,7 +105,7 @@ export default () => {
       )}
       <br />
       <Typography align='center'>
-        View the <a href='https://github.com/p2ppsr/byte-shop-ui'>GitHub Repo</a> for this site
+        View the <a href='https://github.com/p2ppsr/coolcert-ui'>GitHub Repo</a> for this site
       </Typography>
       <br />
       <Typography align='center'>

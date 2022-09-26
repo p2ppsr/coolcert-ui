@@ -1,5 +1,5 @@
 import bsv from 'bsv'
-import { getPublicKey, createAction } from '@babbage/sdk'
+import { getPublicKey, createAction, getCertificates } from '@babbage/sdk'
 import createSignedRequest from './createSignedRequest'
 
 /**
