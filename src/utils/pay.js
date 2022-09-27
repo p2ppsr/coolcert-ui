@@ -1,4 +1,4 @@
-import bsv from 'bsv'
+import bsv from 'babbage-bsv'
 import { getPublicKey, createAction, getCertificates } from '@babbage/sdk'
 import createSignedRequest from './createSignedRequest'
 

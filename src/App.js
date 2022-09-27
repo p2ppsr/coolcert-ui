@@ -14,23 +14,16 @@ import { makeStyles } from '@material-ui/core/styles'
 import { invoice, pay } from './utils'
 import GetCertIcon from '@material-ui/icons/GetApp'
 
-import sdk from '@babbage/sdk'
-
-const isStaging = true || Boolean(process.env.REACT_APP_IS_STAGING)
+import { getCertificates, createCertificate } from '@babbage/sdk'
 
 const useStyles = makeStyles(style, {
   name: 'CoolCert'
 })
 export default () => {
   const classes = useStyles()
-  const [serverURL, setServerURL] = useState(
-    //window.location.host.startsWith('localhost')
-    //  ? 'http://localhost:3002'
-    //  :
-       isStaging
-        ? 'https://staging-coolcert.babbage.systems'
-        : 'https://byte-shop.babbage.systems'
-  )
+  //const [serverURL, setServerURL] = useState('http://localhost:3002')
+  //const [serverURL, setServerURL] = useState('https://coolcert.babbage.systems')
+  const [serverURL, setServerURL] = useState('https://staging-coolcert.babbage.systems')
   const [results, setResults] = useState('')
   const [loading, setLoading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
@@ -40,15 +33,29 @@ export default () => {
     e.preventDefault()
     setLoading(true)
     try {
-      var r = await sdk.getCertificates({
+      let certificates = await getCertificates({
         // Specify the types of certificates to request...
         // Here, we are requesting a "Cool Person Certificate"
-        types: ['AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo='],
+        types: {'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo=': ['cool']},
         // Provide a list of certifiers you trust. Here, we are trusting
         // CoolCert, the CA that issues Cool Person Certificates.
-        certifiers: ['0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8']
+        certifiers: ['0447431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f890b13455f0b59c7b75897033e7ae260834a2397e7c316a0fd21e35e8d81ddd34']
+//        certifiers: ['0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8']
       })
-      console.log('r=', r)
+      //if (typeof certificates === 'object') certificates = certificates.certificates
+      console.log('certificates=', certificates)
+      if (certificates.length === 0) {
+        // Don't have a certificate yet. Request a new one.
+        const certificate = await createCertificate({
+          certificateType: 'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo=',
+          fieldObject: { cool: 'true' },
+          certifierUrl: serverURL,
+          certifierPublicKey: '0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8'
+        })
+        console.log(certificate)
+      } else {
+        // We appear to already have one.
+      }
     } catch (e) {
       console.error(e)
       if (e.response && e.response.data && e.response.data.description) {
