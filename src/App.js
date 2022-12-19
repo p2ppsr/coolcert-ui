@@ -10,14 +10,16 @@ import GetCertIcon from '@material-ui/icons/GetApp'
 
 import { getCertificates, createCertificate } from '@babbage/sdk'
 
-const useStyles = makeStyles(style, { name: 'CoolCert' })
+const useStyles = makeStyles(style, { name: 'Myac' })
 
 export default () => {
   const classes = useStyles()
 
-  //const [serverURL, setServerURL] = useState('http://localhost:3002')
-  //const [serverURL, setServerURL] = useState('https://coolcert.babbage.systems')
-  const [serverURL, setServerURL] = useState('https://staging-coolcert.babbage.systems')
+  const certifierPublicKey = '045384871bedffb233fdb0b4899285d73d0f0a2b9ad18062a062c01c8bdb2f720a1535c6ae0978962d24d95b8e2ec9a4a36f23ab6d31d9e7960714ed92996a77fe'
+  const certificateTypeID = 'jVNgF8+rifnz00856b4TkThCAvfiUE4p+t/aHYl1u0c='
+
+  //const [serverURL, setServerURL] = useState('http://localhost:8081')
+  const [serverURL, setServerURL] = useState('http://localhost:8081')
   const [loading, setLoading] = useState(false)
   const [certExists, setCertExists] = useState(false)
   const [result, setResult] = useState(null)
@@ -35,20 +37,20 @@ export default () => {
       let certificates = await getCertificates({
         // Specify the types of certificates to request...
         // Here, we are requesting a "Cool Person Certificate" and the "cool" property of that certificate type.
-        types: {'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo=': ['cool']},
+        types: {certificateTypeID: ['field1']},
         // Provide a list of certifiers you trust. Here, we are trusting
-        // CoolCert, the CA that issues Cool Person Certificates.
+        // Myac, the CA that issues Cool Person Certificates.
         // This is currently and expanded public key hex string. A canonical compressed standard may be adopted in a future version.
         // The corresponding compressed certifier identifier would be '0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8'
-        certifiers: ['0447431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f890b13455f0b59c7b75897033e7ae260834a2397e7c316a0fd21e35e8d81ddd34']
+        certifiers: [certifierPublicKey]
       })
       if (certificates.length === 0) {
         // Don't have a certificate yet. Request a new one.
         const certificate = await createCertificate({
-          certificateType: 'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo=',
-          fieldObject: { cool: 'true' },
+          certificateType: certificateTypeID,
+          fieldObject: { field1: 42 },
           certifierUrl: serverURL,
-          certifierPublicKey: '0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8'
+          certifierPublicKey: certifierPublicKey
         })
         setResult(certificate)
       } else {
@@ -71,15 +73,15 @@ export default () => {
     <div className={classes.content_wrap}>
       <ToastContainer />
       <center>
-        <Typography variant='h4'>CoolCert UI</Typography>
+        <Typography variant='h4'>Authrite Certifier Tutorial UI</Typography>
         <br />
         <br />
       </center>
       {true && (
         <form>
-          <Typography variant='h5'>Server URL</Typography>
+          <Typography variant='h5'>Authrite Certifier URL</Typography>
           <Typography paragraph>
-            Enter the URL of the CoolCert server to interact with
+            Enter the URL of the Authrite Certifier server to interact with
           </Typography>
           <TextField
             fullWidth
@@ -100,14 +102,14 @@ export default () => {
               disabled={loading}
               startIcon={<GetCertIcon />}
             >
-              Get Cool Certificate
+              Get Certificate
             </Button>
             )}
             <br />
             <br />
             {loading && (
               <div>
-                <Typography variant='h4'>Requesting new CoolCert!</Typography>
+                <Typography variant='h4'>Requesting new certificate!</Typography>
               </div>
             )}
             {result && (
@@ -135,11 +137,7 @@ export default () => {
       )}
       <br />
       <Typography align='center'>
-        View the <a href='https://github.com/p2ppsr/coolcert-ui'>GitHub Repo</a> for this site
-      </Typography>
-      <br />
-      <Typography align='center'>
-        Made with <a href='https://projectbabbage.com'>www.ProjectBabbage.com</a> tools :)
+        Made with <a href='https://projectbabbage.com'>www.ProjectBabbage.com</a>
       </Typography>
     </div>
   )
