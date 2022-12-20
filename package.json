@@ -13,7 +13,7 @@
     "@babbage/react-prompt": "^0.2.2",
     "@babbage/sdk": "^0.3.0",
     "authrite-js": "^0.2.1",
-    "babbage-bsv": "^0.1.0"
+    "babbage-bsv": "^0.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
