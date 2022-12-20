@@ -15,6 +15,7 @@ const useStyles = makeStyles(style, { name: 'Myac' })
 export default () => {
   const classes = useStyles()
 
+  const certifierPublicKeyCompressed = '025384871bedffb233fdb0b4899285d73d0f0a2b9ad18062a062c01c8bdb2f720a'
   const certifierPublicKey = '045384871bedffb233fdb0b4899285d73d0f0a2b9ad18062a062c01c8bdb2f720a1535c6ae0978962d24d95b8e2ec9a4a36f23ab6d31d9e7960714ed92996a77fe'
   const certificateTypeID = 'jVNgF8+rifnz00856b4TkThCAvfiUE4p+t/aHYl1u0c='
 
@@ -34,14 +35,10 @@ export default () => {
     e.preventDefault()
     setLoading(true)
     try {
+      const typesAndFields = {}
+      typesAndFields[certificateTypeID] = ['field1']
       let certificates = await getCertificates({
-        // Specify the types of certificates to request...
-        // Here, we are requesting a "Cool Person Certificate" and the "cool" property of that certificate type.
-        types: {certificateTypeID: ['field1']},
-        // Provide a list of certifiers you trust. Here, we are trusting
-        // Myac, the CA that issues Cool Person Certificates.
-        // This is currently and expanded public key hex string. A canonical compressed standard may be adopted in a future version.
-        // The corresponding compressed certifier identifier would be '0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8'
+        types: typesAndFields,
         certifiers: [certifierPublicKey]
       })
       if (certificates.length === 0) {
