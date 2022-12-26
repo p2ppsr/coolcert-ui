@@ -10,7 +10,7 @@ import GetCertIcon from '@material-ui/icons/GetApp'
 
 import { getCertificates, createCertificate } from '@babbage/sdk'
 
-const useStyles = makeStyles(style, { name: 'CoolCert' })
+const useStyles = makeStyles(style, { name: 'Myac' })
 
 export default () => {
   const classes = useStyles()
@@ -92,15 +92,15 @@ export default () => {
     <div className={classes.content_wrap}>
       <ToastContainer />
       <center>
-        <Typography variant='h4'>CoolCert UI</Typography>
+        <Typography variant='h4'>Authrite Certifier Tutorial UI</Typography>
         <br />
         <br />
       </center>
       {true && (
         <form>
-          <Typography variant='h5'>Server URL</Typography>
+          <Typography variant='h5'>Authrite Certifier URL</Typography>
           <Typography paragraph>
-            Enter the URL of the CoolCert server to interact with
+            Enter the URL of the Authrite Certifier server to interact with
           </Typography>
           <TextField
             fullWidth
@@ -121,14 +121,14 @@ export default () => {
               disabled={loading}
               startIcon={<GetCertIcon />}
             >
-              Get Cool Certificate
+              Get Certificate
             </Button>
             )}
             <br />
             <br />
             {loading && (
               <div>
-                <Typography variant='h4'>Requesting new CoolCert!</Typography>
+                <Typography variant='h4'>Requesting new certificate!</Typography>
               </div>
             )}
             {result && (
@@ -156,11 +156,7 @@ export default () => {
       )}
       <br />
       <Typography align='center'>
-        View the <a href='https://github.com/p2ppsr/coolcert-ui'>GitHub Repo</a> for this site
-      </Typography>
-      <br />
-      <Typography align='center'>
-        Made with <a href='https://projectbabbage.com'>www.ProjectBabbage.com</a> tools :)
+        Made with <a href='https://projectbabbage.com'>www.ProjectBabbage.com</a>
       </Typography>
     </div>
   )

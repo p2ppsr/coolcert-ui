@@ -1,8 +1,6 @@
-# CoolCert UI
+# Myac UI
 
-A example user interface for the [CoolCert Server](https://github.com/p2ppsr/coolcert).
-
-This repository's master branch is deployed at [https://coolcert-ui.babbage.systems](https://coolcert-ui.babbage.systems)
+A example user interface for the [Authrite Certifier Tutorial](https://github.com/p2ppsr/tutorial-myac-1).
 
 ## Setting Up
 

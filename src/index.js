@@ -4,7 +4,7 @@ import App from './App'
 import Prompt from '@babbage/react-prompt'
 
 ReactDOM.render(
-  <Prompt appName='CoolCert UI'>
+  <Prompt appName='Myac UI'>
     <App />
   </Prompt>,
   document.getElementById('root')
