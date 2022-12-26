@@ -15,7 +15,7 @@ const useStyles = makeStyles(style, { name: 'CoolCert' })
 export default () => {
   const classes = useStyles()
 
-  // Certifier type just needs to be unique, not secret or private.
+  // Certificate type just needs to be unique, not secret or private.
   // 32 random bytes as base64 string is good.
   // This is the "standard" coolcert certificate type.
   const certificateType = 'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo='
