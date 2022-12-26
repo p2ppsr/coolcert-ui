@@ -33,8 +33,8 @@ export default () => {
     : 'https://coolcert.babbage.systems'
 
   certifierPublicKey
-    = serverTarget === 'staging' ? '0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8'
-    : serverTarget === 'local' ? '0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8'
+    = serverTarget === 'staging' ? '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83'
+    : serverTarget === 'local' ? '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83'
     : '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd'
 
   const [serverURL, setServerURL] = useState(certifierServerURL)
