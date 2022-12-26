@@ -15,12 +15,29 @@ const useStyles = makeStyles(style, { name: 'Myac' })
 export default () => {
   const classes = useStyles()
 
-  const certifierPublicKeyCompressed = '025384871bedffb233fdb0b4899285d73d0f0a2b9ad18062a062c01c8bdb2f720a'
-  const certifierPublicKey = '045384871bedffb233fdb0b4899285d73d0f0a2b9ad18062a062c01c8bdb2f720a1535c6ae0978962d24d95b8e2ec9a4a36f23ab6d31d9e7960714ed92996a77fe'
-  const certificateTypeID = 'jVNgF8+rifnz00856b4TkThCAvfiUE4p+t/aHYl1u0c='
+  // Certificate type just needs to be unique, not secret or private.
+  // 32 random bytes as base64 string is good.
+  // This is the "standard" coolcert certificate type.
+  const certificateType = 'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo='
 
-  //const [serverURL, setServerURL] = useState('http://localhost:8081')
-  const [serverURL, setServerURL] = useState('http://localhost:8081')
+  // Default server URL to interact with.
+  let certifierServerURL
+  // The public key of the certifier at that URL, must match actual public key.
+  let certifierPublicKey
+
+  const serverTarget = "production" // "staging", "local", default is production
+
+  certifierServerURL
+    = serverTarget === 'staging' ? 'https://staging-coolcert.babbage.systems'
+    : serverTarget === 'local' ? 'http://localhost:3002'
+    : 'https://coolcert.babbage.systems'
+
+  certifierPublicKey
+    = serverTarget === 'staging' ? '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83'
+    : serverTarget === 'local' ? '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83'
+    : '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd'
+
+  const [serverURL, setServerURL] = useState(certifierServerURL)
   const [loading, setLoading] = useState(false)
   const [certExists, setCertExists] = useState(false)
   const [result, setResult] = useState(null)
@@ -35,17 +52,22 @@ export default () => {
     e.preventDefault()
     setLoading(true)
     try {
-      const typesAndFields = {}
-      typesAndFields[certificateTypeID] = ['field1']
+      const typesAndFields =  {}
+      // Here, we are requesting a "Cool Person Certificate" and the "cool" property of that certificate type.
+      typesAndFields[certificateType] = ['cool']
+
       let certificates = await getCertificates({
+        // Specify the types of certificates to request and the fields of interest...
         types: typesAndFields,
+        // Provide a list of certifiers you trust. Here, we are trusting
+        // CoolCert, the CA that issues Cool Person Certificates.
         certifiers: [certifierPublicKey]
       })
       if (certificates.length === 0) {
         // Don't have a certificate yet. Request a new one.
         const certificate = await createCertificate({
-          certificateType: certificateTypeID,
-          fieldObject: { field1: 42 },
+          certificateType: certificateType,
+          fieldObject: { cool: 'true' },
           certifierUrl: serverURL,
           certifierPublicKey: certifierPublicKey
         })
