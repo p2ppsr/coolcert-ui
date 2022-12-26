@@ -15,13 +15,29 @@ const useStyles = makeStyles(style, { name: 'CoolCert' })
 export default () => {
   const classes = useStyles()
 
-
-  //const [serverURL, setServerURL] = useState('http://localhost:3002')
-  //const [serverURL, setServerURL] = useState('https://staging-coolcert.babbage.systems')
-  const [serverURL, setServerURL] = useState('https://coolcert.babbage.systems')
-  const certifierPublicKey = '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd'
+  // Certifier type just needs to be unique, not secret or private.
+  // 32 random bytes as base64 string is good.
+  // This is the "standard" coolcert certificate type.
   const certificateType = 'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo='
 
+  // Default server URL to interact with.
+  let certifierServerURL
+  // The public key of the certifier at that URL, must match actual public key.
+  let certifierPublicKey
+
+  const serverTarget = "production" // "staging", "local", default is production
+
+  certifierServerURL
+    = serverTarget === 'staging' ? 'https://staging-coolcert.babbage.systems'
+    : serverTarget === 'local' ? 'http://localhost:3002'
+    : 'https://coolcert.babbage.systems'
+
+  certifierPublicKey
+    = serverTarget === 'staging' ? '0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8'
+    : serverTarget === 'local' ? '0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8'
+    : '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd'
+
+  const [serverURL, setServerURL] = useState(certifierServerURL)
   const [loading, setLoading] = useState(false)
   const [certExists, setCertExists] = useState(false)
   const [result, setResult] = useState(null)
