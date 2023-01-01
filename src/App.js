@@ -25,18 +25,21 @@ export default () => {
   // The public key of the certifier at that URL, must match actual public key.
   let certifierPublicKey
 
-  const serverTarget = "production" // "staging", "local", default is production
+  const serverTarget = "staging" // "staging", "local", default is production
 
   switch (serverTarget) {
     case 'local':
       certifierServerURL = 'http://localhost:3002';
-      certifierPublicKey = '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd';
+      certifierPublicKey = '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83';
       break;
     case 'staging':
+      certifierServerURL = 'https://staging-coolcert.babbage.systems';
+      certifierPublicKey = '0247431387e513406817e5e8de00901f8572759012f5ed89b33857295bcc2651f8';
+      break;
     case 'production':
     default:
       certifierServerURL = 'https://coolcert.babbage.systems';
-      certifierPublicKey = '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83';
+      certifierPublicKey = '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd';
       break;
   }
 
