@@ -29,7 +29,6 @@ export default () => {
 
   switch (serverTarget) {
     case 'local':
-      certifierPublicKey
       certifierServerURL = 'http://localhost:3002';
       certifierPublicKey = '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd';
       break;
