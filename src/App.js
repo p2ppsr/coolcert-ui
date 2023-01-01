@@ -10,7 +10,7 @@ import GetCertIcon from '@material-ui/icons/GetApp'
 
 import { getCertificates, createCertificate } from '@babbage/sdk'
 
-const useStyles = makeStyles(style, { name: 'Myac' })
+const useStyles = makeStyles(style, { name: 'CoolCert' })
 
 export default () => {
   const classes = useStyles()
@@ -27,15 +27,19 @@ export default () => {
 
   const serverTarget = "production" // "staging", "local", default is production
 
-  certifierServerURL
-    = serverTarget === 'staging' ? 'https://staging-coolcert.babbage.systems'
-    : serverTarget === 'local' ? 'http://localhost:3002'
-    : 'https://coolcert.babbage.systems'
-
-  certifierPublicKey
-    = serverTarget === 'staging' ? '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83'
-    : serverTarget === 'local' ? '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83'
-    : '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd'
+  switch (serverTarget) {
+    case 'local':
+      certifierPublicKey
+      certifierServerURL = 'http://localhost:3002';
+      certifierPublicKey = '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd';
+      break;
+    case 'staging':
+    case 'production':
+    default:
+      certifierServerURL = 'https://coolcert.babbage.systems';
+      certifierPublicKey = '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83';
+      break;
+  }
 
   const [serverURL, setServerURL] = useState(certifierServerURL)
   const [loading, setLoading] = useState(false)
@@ -92,15 +96,15 @@ export default () => {
     <div className={classes.content_wrap}>
       <ToastContainer />
       <center>
-        <Typography variant='h4'>Authrite Certifier Tutorial UI</Typography>
+        <Typography variant='h4'>CoolCert UI</Typography>
         <br />
         <br />
       </center>
       {true && (
         <form>
-          <Typography variant='h5'>Authrite Certifier URL</Typography>
+          <Typography variant='h5'>Server URL</Typography>
           <Typography paragraph>
-            Enter the URL of the Authrite Certifier server to interact with
+            Enter the URL of the CoolCert server to interact with
           </Typography>
           <TextField
             fullWidth
@@ -121,14 +125,14 @@ export default () => {
               disabled={loading}
               startIcon={<GetCertIcon />}
             >
-              Get Certificate
+              Get Cool Certificate
             </Button>
             )}
             <br />
             <br />
             {loading && (
               <div>
-                <Typography variant='h4'>Requesting new certificate!</Typography>
+                <Typography variant='h4'>Requesting new CoolCert!</Typography>
               </div>
             )}
             {result && (
@@ -156,7 +160,11 @@ export default () => {
       )}
       <br />
       <Typography align='center'>
-        Made with <a href='https://projectbabbage.com'>www.ProjectBabbage.com</a>
+        View the <a href='https://github.com/p2ppsr/coolcert-ui'>GitHub Repo</a> for this site
+      </Typography>
+      <br />
+      <Typography align='center'>
+        Made with <a href='https://projectbabbage.com'>www.ProjectBabbage.com</a> tools :)
       </Typography>
     </div>
   )
