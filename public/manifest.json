@@ -1,6 +1,6 @@
 {
-  "short_name": "Myac UI",
-  "name": "Myac UI",
+  "short_name": "CoolCert UI",
+  "name": "CoolCert UI",
   "icons": [
     {
       "src": "favicon.ico",
@@ -24,7 +24,7 @@
   "background_color": "#ffffff",
   "babbage": {
     "spendingAuthorization": {
-      "description": "Requesting a Myac.",
+      "description": "Requesting a CoolCert.",
       "duration": "3888000",
       "amount": "600000"
     }
