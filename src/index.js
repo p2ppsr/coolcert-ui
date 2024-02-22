@@ -1,11 +1,19 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
-import Prompt from '@babbage/react-prompt'
+import BabbagePrompt from '@babbage/react-prompt'
 
 ReactDOM.render(
-  <Prompt appName='CoolCert UI'>
+  <BabbagePrompt
+    customPrompt
+    appName='CoolCert UI'
+    author='Project Babbage'
+    authorUrl='https://projectbabbage.com'
+    description='Get your coolness certified today!'
+    appIcon='/favicon.ico'
+    supportedMetaNet='testnet'
+  >
     <App />
-  </Prompt>,
+  </BabbagePrompt>,
   document.getElementById('root')
 )
