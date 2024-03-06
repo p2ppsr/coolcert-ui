@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles'
 
 import GetCertIcon from '@material-ui/icons/GetApp'
 
-import { getCertificates, createCertificate } from '@babbage/sdk'
+import { getCertificates, createCertificate } from '@babbage/sdk-ts'
 
 const useStyles = makeStyles(style, { name: 'CoolCert' })
 
