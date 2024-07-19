@@ -19,7 +19,6 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false)
   const [certExists, setCertExists] = useState<boolean>(false)
   const [result, setResult] = useState<any>(null)
-  const [useEnvelope, setUseEnvelope] = useState<boolean>(false)
 
   const handleReset = () => {
     setLoading(false)
