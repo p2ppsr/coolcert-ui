@@ -81,18 +81,6 @@ const App: React.FC = () => {
             onChange={(e: { target: { value: React.SetStateAction<string> } }) => setServerURL(e.target.value)}
           />
         </Box>
-        <Box my={4}>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={useEnvelope}
-                onChange={() => setUseEnvelope(!useEnvelope)}
-                color='primary'
-              />
-            }
-            label='Use Envelope Format'
-          />
-        </Box>
         <Box textAlign="center" my={4}>
           {!loading && !result && !certExists && (
             <Button
