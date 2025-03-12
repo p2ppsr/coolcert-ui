@@ -21,6 +21,7 @@ function App() {
       }
     })
     console.log(result)
+    setIsLoading(false)
   };
 
   return (
