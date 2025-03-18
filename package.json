@@ -7,8 +7,9 @@
     "lars": "lars",
     "cars": "cars",
     "lars:config": "lars config",
-    "start": "lars start",
-    "build": "cars build 1",
+    "start": "lars start local",
+    "build:cars": "cars build 1",
+    "build:lars": "lars build 1",
     "deploy": "cars deploy now 1"
   },
   "keywords": [],

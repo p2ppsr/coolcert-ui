@@ -10,8 +10,8 @@
   "contracts": {},
   "configs": [
     {
-      "name": "Local LARS",
-      "network": "mainnet",
+      "name": "local",
+      "network": "testnet",
       "provider": "LARS",
       "run": [
         "frontend"

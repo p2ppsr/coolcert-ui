@@ -3,7 +3,7 @@ import { GithubIcon, ShieldCheck, Server, BookOpen, ArrowRight, Sparkles } from 
 import { WalletClient } from '@bsv/sdk'
 
 function App() {
-  const [serverUrl, setServerUrl] = useState('https://prod-coolcert-921101068003.us-west1.run.app');
+  const [serverUrl, setServerUrl] = useState('http://localhost:8080');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleGetCertificate = async (e: React.FormEvent) => {
@@ -11,8 +11,9 @@ function App() {
     setIsLoading(true);
     // Simulate API call
     const walletClient = new WalletClient('json-api')
+    console.log(walletClient)
     const result = await walletClient.acquireCertificate({
-      certifier: '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd',
+      certifier: '02cab461076409998157f05bb90f07886380186fd3d88b99c549f21de4d2511b83',
       certifierUrl: serverUrl,
       type: 'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo=',
       acquisitionProtocol: 'issuance',
