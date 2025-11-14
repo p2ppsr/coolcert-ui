@@ -1,31 +1,62 @@
 import React, { useState } from 'react';
-import { GithubIcon, ShieldCheck, Server, BookOpen, ArrowRight, Sparkles } from 'lucide-react';
+import { GithubIcon, ShieldCheck, Server, BookOpen, ArrowRight, Sparkles, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { WalletClient } from '@bsv/sdk'
 
 function App() {
   const [serverUrl, setServerUrl] = useState('https://prod-coolcert-921101068003.us-west1.run.app');
   const [isLoading, setIsLoading] = useState(false);
+  const [toasts, setToasts] = useState<{ id: number; type: 'success' | 'error'; message: string }[]>([]);
+
+  const addToast = (type: 'success' | 'error', message: string) => {
+    const id = Date.now() + Math.random();
+    setToasts((t) => [...t, { id, type, message }]);
+    window.setTimeout(() => {
+      setToasts((t) => t.filter((toast) => toast.id !== id));
+    }, 4000);
+  };
 
   const handleGetCertificate = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API call
-    const walletClient = new WalletClient('json-api')
-    const result = await walletClient.acquireCertificate({
-      certifier: '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd',
-      certifierUrl: serverUrl,
-      type: 'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo=',
-      acquisitionProtocol: 'issuance',
-      fields: {
-        cool: 'true'
-      }
-    })
-    console.log(result)
-    setIsLoading(false)
+    try {
+      const walletClient = new WalletClient('auto');
+      const result = await walletClient.acquireCertificate({
+        certifier: '0220529dc803041a83f4357864a09c717daa24397cf2f3fc3a5745ae08d30924fd',
+        certifierUrl: serverUrl,
+        type: 'AGfk/WrT1eBDXpz3mcw386Zww2HmqcIn3uY6x4Af1eo=',
+        acquisitionProtocol: 'issuance',
+        fields: {
+          cool: 'true'
+        }
+      });
+      console.log(result);
+      addToast('success', 'Certificate acquired successfully.');
+    } catch (err: any) {
+      console.error(err);
+      addToast('error', err?.message || 'Failed to acquire certificate.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+      <div className="fixed top-4 right-4 z-50 space-y-2">
+        {toasts.map((t) => (
+          <div
+            key={t.id}
+            onClick={() => setToasts((prev) => prev.filter((x) => x.id !== t.id))}
+            className={`cursor-pointer flex items-center gap-2 rounded-lg px-4 py-3 shadow-lg text-white ${t.type === 'success' ? 'bg-green-600' : 'bg-red-600'}`}
+          >
+            {t.type === 'success' ? (
+              <CheckCircle className="w-5 h-5" />
+            ) : (
+              <XCircle className="w-5 h-5" />
+            )}
+            <span className="text-sm">{t.message}</span>
+          </div>
+        ))}
+      </div>
       <div className="max-w-4xl mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
@@ -73,7 +104,7 @@ function App() {
               className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
             >
               {isLoading ? (
-                'Getting your certificate...'
+                <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
                 <>
                   Get Your Cool Certificate

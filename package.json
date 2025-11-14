@@ -6,16 +6,13 @@
   "scripts": {
     "lars": "lars",
     "cars": "cars",
-    "lars:config": "lars config",
-    "start": "lars start",
-    "build": "cars build 1",
-    "deploy": "cars deploy now 1"
+    "lars:config": "lars config"
   },
   "keywords": [],
   "author": "",
   "license": "SEE LICENSE IN LICENSE.txt",
   "devDependencies": {
-    "@bsv/cars-cli": "^1.1.1",
+    "@bsv/cars-cli": "^1.2.9",
     "@bsv/lars": "^1.2.2"
   }
 }
