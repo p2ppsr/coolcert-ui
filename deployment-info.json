@@ -18,32 +18,10 @@
       ]
     },
     {
-      "name": "atx",
-      "provider": "CARS",
-      "CARSCloudURL": "https://cars.atx.systems",
-      "projectID": "",
-      "network": "mainnet",
-      "deploy": [
-        "frontend"
-      ],
-      "frontendHostingMethod": "HTTPS"
-    },
-    {
       "name": "babbage",
       "provider": "CARS",
       "CARSCloudURL": "https://cars.babbage.systems",
       "projectID": "4d9f308daa7ab49b2f24777457c3bce8",
-      "network": "mainnet",
-      "deploy": [
-        "frontend"
-      ],
-      "frontendHostingMethod": "HTTPS"
-    },
-    {
-      "name": "metanet.club",
-      "provider": "CARS",
-      "CARSCloudURL": "https://cars.metanet.club",
-      "projectID": "13b5481056b86f699a2aecdb753c39c5",
       "network": "mainnet",
       "deploy": [
         "frontend"
