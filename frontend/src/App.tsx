@@ -3,7 +3,7 @@ import { GithubIcon, ShieldCheck, Server, BookOpen, ArrowRight, Sparkles, Loader
 import { WalletClient } from '@bsv/sdk'
 
 function App() {
-  const [serverUrl, setServerUrl] = useState('https://prod-coolcert-921101068003.us-west1.run.app');
+  const [serverUrl, setServerUrl] = useState('https://coolcert-api.babbage.systems');
   const [isLoading, setIsLoading] = useState(false);
   const [toasts, setToasts] = useState<{ id: number; type: 'success' | 'error'; message: string }[]>([]);
 
